@@ -1,0 +1,94 @@
+:root {
+  --fallback-title-bar-height: 45px;
+  
+  /* colors */
+  --background-color-primary: #080a0d;
+  --background-color-secondary: #0a0d10;
+  --background-color-tertiary: rgba(31, 39, 51, .25);
+
+  --border-color-primary: rgba(55, 68, 89, .25);
+
+  --text-color-primary: #fff;
+  --text-color-secondary: #95B8F1;
+
+  --edge-color: rgba(194, 209, 255, 0.25);
+  --node-color-default: #C2D1FF;
+
+}
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+  box-sizing: border-box;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.draggable {
+  app-region: drag;
+  -webkit-app-region: drag;
+}
+
+.nonDraggable {
+  app-region: no-drag;
+  -webkit-app-region: no-drag;
+}
+
+body {
+  font-family: 'Poppins';
+  margin: 0;
+  background: var(--background-color-primary);
+}
+
+
+#root {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: env(titlebar-area-height, var(--fallback-title-bar-height));
+  color: var(--text-color-primary);
+  overflow: hidden;
+}
