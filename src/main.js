@@ -1,5 +1,7 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('node:path');
+
+const fs = require("fs");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -18,6 +20,7 @@ const createWindow = () => {
     },
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      contextIsolation: true,
     },
   });
 
@@ -28,6 +31,27 @@ const createWindow = () => {
   mainWindow.show();
 
   mainWindow.on("closed", () => win = null);
+
+  mainWindow.webContents.on("did-finish-load", () => {
+    mainWindow.webContents.send("file-access-ready");
+  });
+
+  ipcMain.handle("get-directory", () => {
+    // const { filePaths }  = await dialog.showOpenDialog({
+    //   properties: ["openDirectory"],
+    // });
+
+    // console.log(filePaths)
+
+    return readDirectory("C:/");
+
+    // if (filePaths) {
+    //   return await readDirectory(filePaths[0]);
+    // } else {
+    //   return null;
+    // }
+
+  });
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
@@ -59,3 +83,27 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+
+function readDirectory(dirPath) {
+  const files = fs.readdirSync(dirPath);
+
+  console.log("Directory: ", dirPath);
+
+  for (const file of files) {
+    const filePath = path.join(dirPath, file);
+
+    console.log("File: ", file)
+    console.log("File Path: ", filePath);
+
+    try {
+      const stats = fs.statSync(filePath);
+      console.log(stats)
+    } catch (err) {
+      console.log(err)
+    }
+
+  }
+
+  return files;
+}
